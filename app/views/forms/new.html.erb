@@ -1,0 +1,21 @@
+<p>Personal Info</p>
+<div class="flex ">
+  <%= form_with model: @form, local: true do |form| %>
+    <%= form.file_field :image %>
+    <%= form.label "First Name" %>
+    <%= form.text_field :first_name %>
+    <%= form.label "Last Name" %>
+    <%= form.text_field :last_name %>
+    <br>
+    <%= form.label "Email" %>
+    <%= form.email_field :email %>
+    <%= form.label "Phone" %>
+    <%= form.phone_field :phone %>
+    <br>
+    <%= form.label "Address" %>
+    <%= form.text_field :address %>
+    <%= form.submit 'Next' %>
+  <% end %>
+  <!-- <%= image_tag 'template1.png', class:"h-5/6" %> -->
+</div>
+<div class="h-5/6"></div>
