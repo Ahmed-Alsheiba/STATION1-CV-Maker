@@ -15,7 +15,7 @@ class FormsController < ApplicationController
 
   private
   def set_form
-    @form = Form.find(params[:id])
+    @form = Form.find_by(params[:id])
   end
 
   def form_params
