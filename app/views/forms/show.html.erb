@@ -1,0 +1,9 @@
+
+<h1><%= @form.first_name %> <%= @form.last_name %></h1>
+<p>Email: <%= @form.email %></p>
+<p>Phone: <%= @form.phone %></p>
+<p>Address: <%= @form.address %></p>
+
+<%= image_tag @form.photo if @form.photo.present? %>
+
+<%= link_to 'Back', root_path %>

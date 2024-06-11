@@ -1,3 +1,3 @@
 class Form < ApplicationRecord
-  # Your code goes here
+  has_one_attached :photo
 end

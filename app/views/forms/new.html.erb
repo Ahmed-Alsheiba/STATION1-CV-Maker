@@ -1,7 +1,8 @@
 <p>Personal Info</p>
 <div class="flex ">
   <%= form_with model: @form, local: true do |form| %>
-    <%= form.file_field :image %>
+    <%= form.label "Personal Photo" %>
+    <%= form.file_field :photo %>
     <%= form.label "First Name" %>
     <%= form.text_field :first_name %>
     <%= form.label "Last Name" %>
