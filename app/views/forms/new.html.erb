@@ -1,22 +1,21 @@
 <p>Personal Info</p>
-<div class="flex ">
-  <%= form_with model: @form, local: true do |form| %>
-    <%= form.label "Personal Photo" %>
-    <%= form.file_field :photo %>
-    <%= form.label "First Name" %>
-    <%= form.text_field :first_name %>
-    <%= form.label "Last Name" %>
-    <%= form.text_field :last_name %>
-    <br>
-    <%= form.label "Email" %>
-    <%= form.email_field :email %>
-    <%= form.label "Phone" %>
-    <%= form.phone_field :phone %>
-    <br>
-    <%= form.label "Address" %>
-    <%= form.text_field :address %>
-    <%= form.submit 'Next' %>
+<div class="grid grid-cols-3 gap-10 grid-rows-1 m-2">
+  <%= form_with model: @form, class:"col-span-2 ga", local: true do |form| %>
+    <div class="grid grid-rows-3 custom-grid gap-10">
+      <div class="gird grid-cols-3 gap-1">
+        <%= form.file_field :photo, class: "bg-gray-200 size-52 min-w-[32%] rounded content-center " %>
+        <%= form.text_field :first_name , class:"w-1/3 h-16", placeholder:"First name" %>
+        <%= form.text_field :last_name , class:"w-1/3 h-16", placeholder:"Last name" %>
+      </div>
+      <div class="flex gap-1 max-h-16">
+        <%= form.email_field :email, class:"w-1/2 h-16", placeholder:"Email" %>
+        <%= form.phone_field :phone, class:"w-1/2 h-16", placeholder:"Phone number" %>
+      </div>
+      <div class="h-fit">
+        <%= form.text_field :address, class:"w-full h-16", placeholder:"Address" %>
+      </div>
+      <%= form.submit 'Next', class:"w-1/4 justify-self-center focus:outline-none text-light hover:text-white bg-porange hover:bg-ldark focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900" %>
+    </div>
   <% end %>
-  <!-- <%= image_tag 'template1.png', class:"h-5/6" %> -->
+  <%= image_tag 'template1.png', class:"h-[90vh] col-span-1 rounded justify-self-center" %> 
 </div>
-<div class="h-5/6"></div>

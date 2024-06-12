@@ -12,3 +12,7 @@ body{
   font-family: 'Oswald-Variable', "Oswald-Regular", sans-serif;
   background: #FFFCF2;
 }
+
+.custom-grid {
+  grid-template-rows: auto 1fr 1fr;
+}
