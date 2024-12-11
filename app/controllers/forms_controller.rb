@@ -6,6 +6,7 @@ class FormsController < ApplicationController
 
   def create
     @form = Form.new(form_params)
+    @form.user = current_user
     if @form.save
       redirect_to root_path
     else
@@ -22,6 +23,6 @@ class FormsController < ApplicationController
   end
 
   def form_params
-    params.require(:form).permit(:first_name, :last_name, :email, :phone, :address, :photo)
+    params.require(:form).permit(:first_name, :last_name, :email, :phone, :address, :photo, :user_id)
   end
 end
