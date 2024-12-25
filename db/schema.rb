@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_11_155850) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_14_100356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_155850) do
     t.string "college"
     t.integer "degree_starting_year"
     t.integer "degree_finishing_year"
+    t.string "skills"
+    t.string "languages"
+    t.string "prev_job_title"
+    t.string "prev_company"
+    t.string "prev_company_address"
+    t.integer "prev_job_starting_year"
+    t.integer "prev_job_ending_year"
+    t.text "about_prev_job"
     t.index ["user_id"], name: "index_forms_on_user_id"
   end
 
