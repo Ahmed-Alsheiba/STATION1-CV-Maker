@@ -41,6 +41,17 @@
       <div class="flex gap-1 max-h-32">
         <%= f.text_area :about_prev_job, class:"w-full h-32", placeholder:"About previous job"%>
       </div>
+      <hr class="my-4 border-gray-300">
+      <div class="flex gap-1 max-h-16">
+        <%= f.text_area :about_you, class:"w-full h-32", placeholder:"About you"%>
+      </div>
+      <hr class="my-4 border-gray-300">
+      <h1>Referance</h1> 
+      <div class="flex gap-1 max-h-16">
+        <%= f.text_field :ref_name, class:"w-1/2 h-16", placeholder:"Name"%>
+        <%= f.text_field :ref_email, class:"w-1/2 h-16", placeholder:"Email"%>
+        <%= f.text_field :ref_phone, class:"w-1/2 h-16", placeholder:"Phone number"%>
+      </div>
       <%= f.submit 'Next', class:"w-1/4 justify-self-center focus:outline-none text-light hover:text-white bg-porange hover:bg-ldark focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900" %>
     </div>
   <% end %>
