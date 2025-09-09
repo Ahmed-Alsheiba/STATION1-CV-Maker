@@ -15,6 +15,8 @@ class FormsController < ApplicationController
   end
 
   def show
+    @skills = @form.skills.split(',')
+    @languages = @form.languages.split(',')
   end
 
   private

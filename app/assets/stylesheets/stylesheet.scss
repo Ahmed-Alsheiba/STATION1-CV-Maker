@@ -16,3 +16,14 @@ body{
 .custom-grid {
   grid-template-rows: auto 1fr 1fr;
 }
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .no-print {
+    display: none;
+  }
+}
+  
