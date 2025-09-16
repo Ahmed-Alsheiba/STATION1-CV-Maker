@@ -1,59 +1,69 @@
-<div class="grid grid-cols-3 gap-10 grid-rows-1 m-2">
+<div class="grid grid-cols-3 gap-10 grid-rows-1 p-6">
   <%= form_with model: @form, class:"col-span-2 max-lg:col-span-3", local: true do |f| %>
-    <div class="grid grid-rows-3 custom-grid gap-10">
+    <div class="grid grid-rows-3 custom-grid ">
       <div>
-        <%= f.file_field :photo, accept: "image/png,image/jpeg", class: "bg-gray-200 size-52 min-w-[32%] rounded content-center" %>
+        <h3>Personal Photo</h3>
+        <%= f.file_field :photo, accept: "image/png,image/jpeg", class: "bg-gray-200 size-52 min-w-[32%] p-3 content-center rounded-lg" %>
       </div>
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :first_name , class:"w-1/2 h-16", placeholder:"First name" %>
-        <%= f.text_field :last_name , class:"w-1/2 h-16", placeholder:"Last name" %>
+      <br>
+      <h3>Your name</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :first_name , class:"w-1/2 h-16 rounded-lg", placeholder:"First name" %>
+        <%= f.text_field :last_name , class:"w-1/2 h-16 rounded-lg", placeholder:"Last name" %>
       </div>
-      <div class="flex gap-1 max-h-16">
-        <%= f.email_field :email, class:"w-1/2 h-16", placeholder:"Email" %>
-        <%= f.phone_field :phone, class:"w-1/2 h-16", placeholder:"Phone number" %>
+      <h3>Contact Information</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.email_field :email, class:"w-1/2 h-16 rounded-lg", placeholder:"Email" %>
+        <%= f.phone_field :phone, class:"w-1/2 h-16 rounded-lg", placeholder:"Phone number" %>
       </div>
+      <h3>Address</h3>
       <div class="h-fit">
-        <%= f.text_field :address, class:"w-full h-16", placeholder:"Address" %>
+        <%= f.text_field :address, class:"w-full h-16 rounded-lg", placeholder:"Address" %>
       </div>
       <hr class="my-4 border-gray-300">
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :degree, class:"w-1/2 h-16", placeholder:"Degree" %>
-        <%= f.text_field :college, class:"w-1/2 h-16", placeholder:"College" %>
+      <h3>Education</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :degree, class:"w-1/2 h-16 rounded-lg", placeholder:"Degree" %>
+        <%= f.text_field :college, class:"w-1/2 h-16 rounded-lg", placeholder:"College" %>
       </div>
-      <div class="flex gap-1 max-h-16">
-        <%= f.number_field :degree_starting_year, class:"w-1/2 h-16", placeholder:"Starting Year", min: 1900, max: Date.today.year %>
-        <%= f.number_field :degree_finishing_year, class:"w-1/2 h-16", placeholder:"Finishing Year", min: 1900 %>
-      </div>
-      <hr class="my-4 border-gray-300">
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :skills, class:"w-1/2 h-16", placeholder:"Skills" %>
-        <%= f.text_field :languages, class:"w-1/2 h-16", placeholder:"Languages"%>
+      <h3>Years Attended</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.number_field :degree_starting_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Starting Year", min: 1900, max: Date.today.year %>
+        <%= f.number_field :degree_finishing_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Finishing Year", min: 1900 %>
       </div>
       <hr class="my-4 border-gray-300">
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :prev_job_title, class:"w-1/2 h-16", placeholder:"Previous Job Title" %>
-        <%= f.text_field :prev_company, class:"w-1/2 h-16", placeholder:"Previous Company"%>
-      </div>
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :prev_company_address, class:"w-1/2 h-16", placeholder:"Company Address"%>
-        <%= f.number_field :prev_job_starting_year, class:"w-1/2 h-16", placeholder:"Starting Year"%>
-        <%= f.number_field :prev_job_finishing_year, class:"w-1/2 h-16", placeholder:"Finishing Year"%>
-      </div>
-      <div class="flex gap-1 max-h-32">
-        <%= f.text_area :about_prev_job, class:"w-full h-32", placeholder:"About previous job"%>
+      <h3>Skills & Languages</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :skills, class:"w-1/2 h-16 rounded-lg", placeholder:"Skills" %>
+        <%= f.text_field :languages, class:"w-1/2 h-16 rounded-lg", placeholder:"Languages"%>
       </div>
       <hr class="my-4 border-gray-300">
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_area :about_you, class:"w-full h-32", placeholder:"About you"%>
+      <h3>Previous Job</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :prev_job_title, class:"w-1/2 h-16 rounded-lg", placeholder:"Previous Job Title" %>
+        <%= f.text_field :prev_company, class:"w-1/2 h-16 rounded-lg", placeholder:"Previous Company"%>
+      </div>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :prev_company_address, class:"w-1/2 h-16 rounded-lg", placeholder:"Company Address"%>
+        <%= f.number_field :prev_job_starting_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Starting Year"%>
+        <%= f.number_field :prev_job_finishing_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Finishing Year"%>
+      </div>
+      <div class="flex gap-1 max-h-32 mb-6 mt-2">
+        <%= f.text_area :about_prev_job, class:"w-full h-32 rounded-lg", placeholder:"About previous job"%>
       </div>
       <hr class="my-4 border-gray-300">
-      <h1>Referance</h1> 
-      <div class="flex gap-1 max-h-16">
-        <%= f.text_field :ref_name, class:"w-1/2 h-16", placeholder:"Name"%>
-        <%= f.text_field :ref_email, class:"w-1/2 h-16", placeholder:"Email"%>
-        <%= f.text_field :ref_phone, class:"w-1/2 h-16", placeholder:"Phone number"%>
+      <h3>About You</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_area :about_you, class:"w-full h-32 rounded-lg", placeholder:"About you"%>
       </div>
-      <%= f.submit 'Next', class:"w-1/4 justify-self-center focus:outline-none text-light hover:text-white bg-porange hover:bg-ldark focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-yellow-900" %>
+      <hr class="my-4 border-gray-300">
+      <h3>Reference</h3>
+      <div class="flex gap-1 max-h-16 mb-6 mt-2">
+        <%= f.text_field :ref_name, class:"w-1/2 h-16 rounded-lg", placeholder:"Name"%>
+        <%= f.text_field :ref_email, class:"w-1/2 h-16 rounded-lg", placeholder:"Email"%>
+        <%= f.text_field :ref_phone, class:"w-1/2 h-16 rounded-lg", placeholder:"Phone number"%>
+      </div>
+      <%= f.submit 'Save', class:"w-1/5 justify-self-center focus:outline-none text-light hover:text-white bg-porange hover:bg-ldark focus:ring-4  font-medium rounded-lg text-lg px-5 py-2.5 dark:focus:ring-yellow-900" %>
     </div>
   <% end %>
   <%= image_tag 'template1.png', class:"h-[90vh] col-span-1 rounded justify-self-center max-lg:hidden" %>

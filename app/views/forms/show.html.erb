@@ -23,6 +23,8 @@
         <div id="photo">
           <%= image_tag @form.photo, class:"aspect-square" %>
         </div>
+        <% else %>
+        <%= image_tag "personalPhoto.png", class:"aspect-square" %>
       <% end %>
       <div class="text-center text-light text-xl text-pretty" id="contact">
         <p>Email: <%= @form.email %></p>

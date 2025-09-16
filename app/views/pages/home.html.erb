@@ -1,6 +1,6 @@
 <h1 class="text-6xl max-lg:text-5xl text-porange grid absolute inset-x-0 top-0 justify-center font-bold">STATOIN1</h1>
 <div class="grid grid-cols-4 h-screen content-center overflow-hidden">
-  <div class="col-span-2 max-lg:col-span-4 content-center pl-20 max-lg:text-center">
+  <div class="col-span-2 max-lg:col-span-4 content-center px-16 max-lg:text-center">
     <h3 class="text-6xl max-xl:text-4xl text-pdark pl-3 pt-4">Welcome to the <span class="text-porange font-bold">STATOIN1</span></h3>
     <h4 class="text-5xl max-xl:text-3xl text-ldark pl-3 pt-5">
       Your launchpad to professional <span class="text-porange font-semibold">Success</span>
@@ -13,8 +13,14 @@
       we're here to help you elevate your career journey. <br>
       Let's embark on this voyage together! <br>
     </p>
-    <div class="justify-self-center w-fit rounded-lg mt-7 pl-5 pr-5 pt-2 pb-2 bg-porange text-light hover:text-ldark transition duration-300 ease-in-out">
-      <%= link_to 'Get Started', new_form_path %>
+    <div class="flex flex-row gap-4 justify-center max-lg:justify-center mt-9">
+      <div class="justify-self-center w-fit rounded-lg p-3 bg-porange text-light text-xl hover:text-ldark transition duration-300 ease-in-out">
+        <%= link_to 'Show Examples', examples_path %>
+      </div>
+      <div class="border-l-2 border-ldark h-12 self-center"></div>
+      <div class="justify-self-center w-fit rounded-lg p-3 bg-porange text-light text-xl hover:text-ldark transition duration-300 ease-in-out">
+        <%= link_to 'Get Started', new_form_path %>
+      </div>
     </div>
   </div>
   <div class="grid max-lg:hidden col-span-2 relative justify-center h-screen">
@@ -23,25 +29,3 @@
     <%= image_tag 'CV1', class:"max-h-[80%] max-xl:max-h-[50%] self-center absolute inset-y-[10%] inset-x-1/4 rounded-lg outline shadow-xl" %>
   </div>
 </div>
-
-
-
-
-<!-- 
-
-<br>
-
-<% @forms.each do |f| %>
-
-  <%= link_to f.first_name, form_path(f) %>
-
-<% end %>
-  
-
-<% if user_signed_in? %>
-  <%= link_to 'Profile', edit_user_registration_path %>
-  <%= button_to 'Sign Out', destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to 'Login', new_user_session_path %>
-  <%= link_to 'Sign Up', new_user_registration_path %>
-<% end %>
