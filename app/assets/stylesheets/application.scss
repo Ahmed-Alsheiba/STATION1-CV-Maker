@@ -1,11 +1,12 @@
+// Sassy
 @font-face {
   font-family: 'Oswald-Variable';
-  src: asset-url('Oswald-VariableFont_wght.ttf') format('truetype');
+  src: url('/assets/Oswald-VariableFont_wght.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'Oswald-Regular';
-  src: asset-url('Oswald-Regular.ttf') format('truetype');
+  src: url('/assets/Oswald-Regular.ttf') format('truetype');
 }
 
 body{
@@ -26,4 +27,3 @@ body{
     display: none;
   }
 }
-  
