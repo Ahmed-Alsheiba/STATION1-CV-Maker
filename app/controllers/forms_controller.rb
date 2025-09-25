@@ -6,9 +6,13 @@ class FormsController < ApplicationController
 
   def create
     @form = Form.new(form_params)
-    @form.user = current_user
+    if current_user
+      @form.user = current_user
+    else
+      @form.user = User.first
+    end
     if @form.save
-      redirect_to root_path
+      redirect_to form_path(@form)
     else
       render :new
     end
