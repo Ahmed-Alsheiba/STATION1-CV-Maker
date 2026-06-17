@@ -1,23 +1,102 @@
-<h1 class="text-6xl max-lg:text-5xl text-porange grid absolute inset-x-0 top-0 justify-center font-bold">STATOIN1</h1>
-<div class="grid grid-cols-4 h-screen content-center">
-  <div class="col-span-2 max-lg:col-span-4 content-center max-lg:text-center">
-    <h3 class="text-4xl max-xl:text-2xl text-pdark pl-3 pt-4">Example CVs</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mt-6">
-      <% @forms.each do |form| %>
-        <div class="border p-4 m-4 rounded-lg shadow hover:shadow-lg transition duration-200 ease-in-out">
-          <h3 class="text-xl font-semibold text-pdark"><%= form.first_name %> <%= form.last_name %></h3>
-          <p class="text-ldark"><%= form.email %></p>
-          <%= link_to 'View CV', form_path(form), class: "text-porange hover:underline" %>
+<section class="bg-pdark pt-24 pb-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <p class="text-porange text-xs font-bold uppercase tracking-[0.35em]">Gallery</p>
+    <h1 class="mt-4 text-5xl xl:text-6xl font-serif font-black text-light leading-tight">
+      Example CVs
+    </h1>
+    <p class="mt-4 text-beige text-lg max-w-lg leading-relaxed">
+      Real resumes created on Station1. Browse for inspiration, then build your own.
+    </p>
+  </div>
+</section>
+
+
+<section class="bg-light py-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+
+    <% if @forms.any? %>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @forms.each do |form| %>
+
+          <div class="group border-2 border-beige hover:border-porange bg-white transition-all duration-300 hover:shadow-xl flex flex-col">
+
+            <div class="bg-ldark px-6 py-8 flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-porange flex-shrink-0 flex items-center justify-center">
+                <span class="text-base font-black text-light leading-none tracking-tight">
+                  <%= form.first_name.to_s.first.to_s.upcase %><%= form.last_name.to_s.first.to_s.upcase %>
+                </span>
+              </div>
+              <div class="min-w-0">
+                <h3 class="text-lg font-bold text-light truncate">
+                  <%= form.first_name %> <%= form.last_name %>
+                </h3>
+                <p class="text-beige text-sm mt-0.5 truncate"><%= form.email %></p>
+              </div>
+            </div>
+
+            <div class="h-0.5 bg-porange w-0 group-hover:w-full transition-all duration-500 ease-out"></div>
+
+            <div class="px-6 py-5 mt-auto">
+              <%= link_to form_path(form),
+                    class: "inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-ldark hover:text-porange transition-colors duration-200" do %>
+                View CV
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+              <% end %>
+            </div>
+
+          </div>
+
+        <% end %>
+      </div>
+
+    <% else %>
+
+      <div class="flex flex-col items-center justify-center text-center py-28 border-2 border-dashed border-beige">
+        <div class="w-16 h-16 rounded-full bg-beige/40 flex items-center justify-center mb-6">
+          <svg class="w-8 h-8 text-ldark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
         </div>
-      <% end %>
-    </div>
-    <div class="justify-self-center w-fit rounded-lg mt-7 pl-5 pr-5 pt-2 pb-2 bg-porange text-light text-xl hover:text-ldark transition duration-300 ease-in-out">
-      <%= link_to 'Create Yours Now!!', new_form_path %>
-    </div>
+        <h3 class="text-2xl font-serif font-black text-pdark mb-3">No CVs yet</h3>
+        <p class="text-ldark max-w-sm mb-8 leading-relaxed">
+          The gallery is empty. Be the first to create a resume on Station1.
+        </p>
+        <%= link_to new_form_path, class: "group inline-flex items-center gap-3 px-8 py-4 bg-porange text-light text-sm font-bold uppercase tracking-widest hover:bg-pdark transition-colors duration-300" do %>
+          Create the First CV
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        <% end %>
+      </div>
+
+    <% end %>
+
   </div>
-  <div class="grid max-lg:hidden col-span-2 relative justify-center h-screen">
-    <%= image_tag 'CV2.png', class:"max-h-[80%] max-xl:max-h-[50%] self-center absolute inset-y-[10%] inset-x-1/4 rounded-lg outline shadow-xl origin-bottom -rotate-[9deg] blur-sm" %>
-    <%= image_tag 'CV3.png', class:"max-h-[80%] max-xl:max-h-[50%] self-center absolute inset-y-[10%] inset-x-1/4 rounded-lg outline shadow-xl origin-bottom rotate-[14deg] blur-sm" %>
-    <%= image_tag 'CV1.png', class:"max-h-[80%] max-xl:max-h-[50%] self-center absolute inset-y-[10%] inset-x-1/4 rounded-lg outline shadow-xl" %>
+</section>
+
+
+<section class="bg-pdark py-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+
+    <div>
+      <h2 class="text-3xl xl:text-4xl font-serif font-black text-light leading-tight">
+        Ready to build yours?
+      </h2>
+      <p class="mt-3 text-beige max-w-md leading-relaxed">
+        Join others who've used Station1 to create standout CVs that land interviews.
+      </p>
+    </div>
+
+    <%= link_to new_form_path, class: "group flex-shrink-0 inline-flex items-center gap-3 px-10 py-5 bg-porange text-light text-sm font-bold uppercase tracking-widest hover:bg-light hover:text-pdark transition-colors duration-300" do %>
+      Start Building
+      <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+      </svg>
+    <% end %>
+
   </div>
-</div>
+</section>

@@ -1,70 +1,204 @@
-<div class="grid grid-cols-3 gap-10 grid-rows-1 p-6">
-  <%= form_with model: @form, class:"col-span-2 max-lg:col-span-3", local: true do |f| %>
-    <div class="grid grid-rows-3 custom-grid ">
-      <div>
-        <h3>Personal Photo</h3>
-        <%= f.file_field :photo, accept: "image/png,image/jpeg", class: "bg-gray-200 size-52 min-w-[32%] p-3 content-center rounded-lg" %>
+<%# ================================================================ %>
+<%# new.html.erb — STATION1 CV Builder                              %>
+<%# ================================================================ %>
+
+
+<%# ─── PAGE HEADER ────────────────────────────────────────────── %>
+<section class="bg-pdark pt-24 pb-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-16">
+    <p class="text-porange text-xs font-bold uppercase tracking-[0.35em]">Build Your CV</p>
+    <h1 class="mt-4 text-5xl xl:text-6xl font-serif font-black text-light leading-tight">
+      Create Your CV
+    </h1>
+    <p class="mt-4 text-beige text-lg max-w-lg leading-relaxed">
+      Fill in each section below — your CV preview updates with the same structure
+      you'll see on the finished page.
+    </p>
+  </div>
+</section>
+
+
+<%# ─── FORM + PREVIEW ─────────────────────────────────────────── %>
+<section class="bg-light py-20">
+  <div class="max-w-[1600px] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] xl:grid-cols-[minmax(0,1fr)_500px] 2xl:grid-cols-[minmax(0,1fr)_560px] gap-10 lg:gap-16 items-start">
+
+    <% input_class = "w-full h-14 px-4 bg-light border-2 border-beige text-pdark placeholder-ldark/50 focus:outline-none focus:border-porange transition-colors duration-200" %>
+    <% textarea_class = "w-full px-4 py-3 bg-light border-2 border-beige text-pdark placeholder-ldark/50 focus:outline-none focus:border-porange transition-colors duration-200" %>
+
+    <%= form_with model: @form, class: "space-y-8", local: true do |f| %>
+
+      <%# 01 — Personal Photo %>
+      <div class="bg-white border-2 border-beige p-8" data-controller="photo-preview">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">01</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Personal Photo</h3>
+
+        <div class="flex items-center gap-6">
+          <label class="relative w-32 h-32 rounded-full border-2 border-beige bg-light flex items-center justify-center cursor-pointer overflow-hidden flex-shrink-0">
+            <svg data-photo-preview-target="placeholder" class="w-8 h-8 text-ldark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 17a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
+            </svg>
+            <img data-photo-preview-target="image" class="hidden absolute inset-0 w-full h-full object-cover">
+            <%= f.file_field :photo, accept: "image/png,image/jpeg", class: "hidden", data: { photo_preview_target: "input", action: "change->photo-preview#preview" } %>
+          </label>
+
+          <div>
+            <p class="text-sm font-bold uppercase tracking-widest text-pdark">Click the circle to upload</p>
+            <p class="mt-1 text-sm text-ldark">PNG or JPEG</p>
+            <button type="button" data-photo-preview-target="removeButton" data-action="click->photo-preview#remove"
+                    class="hidden mt-2 text-sm font-bold uppercase tracking-widest text-porange hover:text-pdark transition-colors duration-200">
+              Remove photo
+            </button>
+          </div>
+        </div>
       </div>
-      <br>
-      <h3>Your name</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :first_name , class:"w-1/2 h-16 rounded-lg", placeholder:"First name" %>
-        <%= f.text_field :last_name , class:"w-1/2 h-16 rounded-lg", placeholder:"Last name" %>
+
+      <%# 02 — Your Name %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">02</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Your Name</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.text_field :first_name, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "First name" %>
+          <%= f.text_field :last_name, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Last name" %>
+        </div>
       </div>
-      <h3>Contact Information</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.email_field :email, class:"w-1/2 h-16 rounded-lg", placeholder:"Email" %>
-        <%= f.phone_field :phone, class:"w-1/2 h-16 rounded-lg", placeholder:"Phone number" %>
+
+      <%# 03 — Contact Information %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">03</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Contact Information</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.email_field :email, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Email" %>
+          <%= f.phone_field :phone, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Phone number" %>
+        </div>
       </div>
-      <h3>Address</h3>
-      <div class="h-fit">
-        <%= f.text_field :address, class:"w-full h-16 rounded-lg", placeholder:"Address" %>
+
+      <%# 04 — Address %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">04</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Address</h3>
+        <%= f.text_field :address, class: input_class, placeholder: "Address" %>
       </div>
-      <hr class="my-4 border-gray-300">
-      <h3>Education</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :degree, class:"w-1/2 h-16 rounded-lg", placeholder:"Degree" %>
-        <%= f.text_field :college, class:"w-1/2 h-16 rounded-lg", placeholder:"College" %>
+
+      <%# 05 — Education %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">05</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Education</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.text_field :degree, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Degree" %>
+          <%= f.text_field :college, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "College" %>
+        </div>
+        <p class="mt-6 text-xs font-bold uppercase tracking-widest text-ldark">Years Attended</p>
+        <div class="mt-3 flex flex-wrap gap-4">
+          <%= f.number_field :degree_starting_year, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Starting Year", min: 1900, max: Date.today.year %>
+          <%= f.number_field :degree_finishing_year, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Finishing Year", min: 1900 %>
+        </div>
       </div>
-      <h3>Years Attended</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.number_field :degree_starting_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Starting Year", min: 1900, max: Date.today.year %>
-        <%= f.number_field :degree_finishing_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Finishing Year", min: 1900 %>
+
+      <%# 06 — Skills & Languages %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">06</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Skills &amp; Languages</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.text_field :skills, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Skills" %>
+          <%= f.text_field :languages, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Languages" %>
+        </div>
       </div>
-      <hr class="my-4 border-gray-300">
-      <h3>Skills & Languages</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :skills, class:"w-1/2 h-16 rounded-lg", placeholder:"Skills" %>
-        <%= f.text_field :languages, class:"w-1/2 h-16 rounded-lg", placeholder:"Languages"%>
+
+      <%# 07 — Previous Job %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">07</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Previous Job</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.text_field :prev_job_title, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Previous Job Title" %>
+          <%= f.text_field :prev_company, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Previous Company" %>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-4">
+          <%= f.text_field :prev_company_address, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Company Address" %>
+          <%= f.number_field :prev_job_starting_year, class: input_class + " sm:w-[calc(25%-0.75rem)]", placeholder: "Starting Year" %>
+          <%= f.number_field :prev_job_ending_year, class: input_class + " sm:w-[calc(25%-0.75rem)]", placeholder: "Finishing Year" %>
+        </div>
+        <div class="mt-4">
+          <%= f.text_area :about_prev_job, class: textarea_class + " h-32", placeholder: "About previous job" %>
+        </div>
       </div>
-      <hr class="my-4 border-gray-300">
-      <h3>Previous Job</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :prev_job_title, class:"w-1/2 h-16 rounded-lg", placeholder:"Previous Job Title" %>
-        <%= f.text_field :prev_company, class:"w-1/2 h-16 rounded-lg", placeholder:"Previous Company"%>
+
+      <%# 08 — About You %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">08</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">About You</h3>
+        <%= f.text_area :about_you, class: textarea_class + " h-32", placeholder: "About you" %>
       </div>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :prev_company_address, class:"w-1/2 h-16 rounded-lg", placeholder:"Company Address"%>
-        <%= f.number_field :prev_job_starting_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Starting Year"%>
-        <%= f.number_field :prev_job_finishing_year, class:"w-1/2 h-16 rounded-lg", placeholder:"Finishing Year"%>
+
+      <%# 09 — Reference %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">09</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Reference</h3>
+        <div class="flex flex-wrap gap-4">
+          <%= f.text_field :ref_name, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Name" %>
+          <%= f.text_field :ref_email, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Email" %>
+          <%= f.text_field :ref_phone, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Phone number" %>
+        </div>
       </div>
-      <div class="flex gap-1 max-h-32 mb-6 mt-2">
-        <%= f.text_area :about_prev_job, class:"w-full h-32 rounded-lg", placeholder:"About previous job"%>
+
+      <div class="flex justify-center">
+        <%= f.submit "Save", class: "group inline-flex items-center gap-3 px-10 py-5 bg-porange text-light text-sm font-bold uppercase tracking-widest hover:bg-pdark transition-colors duration-300 cursor-pointer" %>
       </div>
-      <hr class="my-4 border-gray-300">
-      <h3>About You</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_area :about_you, class:"w-full h-32 rounded-lg", placeholder:"About you"%>
+
+    <% end %>
+
+    <%# ─── CV PREVIEW MOCKUP ───────────────────────────────────── %>
+    <%# Static placeholder for now — mirrors forms/show.html.erb's section
+        names and left/right split so wiring it to live @form data later
+        is a mechanical swap of this sample text %>
+    <div class="hidden lg:block lg:sticky lg:top-24 self-start pt-8">
+      <%# A4 ratio (210mm × 297mm) so the placeholder reads as an actual page %>
+      <div class="bg-white border border-beige shadow-2xl aspect-[210/297] w-full p-8 xl:p-10 overflow-hidden">
+        <div class="grid grid-cols-3 gap-6 h-full">
+
+          <div class="col-span-2 flex flex-col">
+            <h2 class="text-4xl xl:text-5xl font-serif font-black text-pdark leading-tight">Jane</h2>
+            <h2 class="text-4xl xl:text-5xl font-serif font-black text-ldark leading-tight">Doe</h2>
+
+            <p class="mt-8 text-porange text-xs font-bold uppercase tracking-widest">Profile</p>
+            <p class="mt-2 text-sm text-ldark leading-relaxed">
+              A short summary of who you are and what you're looking for.
+            </p>
+
+            <p class="mt-8 text-porange text-xs font-bold uppercase tracking-widest">Experience</p>
+            <p class="mt-2 text-sm font-semibold text-pdark">Job Title</p>
+            <p class="text-sm text-ldark">Company Name</p>
+            <p class="text-xs text-beige">2020 – 2024</p>
+            <p class="mt-2 text-sm text-ldark leading-relaxed">
+              A line or two describing your responsibilities and impact in this role.
+            </p>
+          </div>
+
+          <div class="flex flex-col">
+            <div class="aspect-square bg-ldark border border-beige flex items-center justify-center">
+              <svg class="w-10 h-10 text-beige" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+
+            <p class="mt-6 text-porange text-xs font-bold uppercase tracking-widest">Education</p>
+            <p class="text-sm text-pdark">Degree</p>
+            <p class="text-xs text-ldark">College</p>
+
+            <p class="mt-6 text-porange text-xs font-bold uppercase tracking-widest">Skills</p>
+            <p class="text-xs text-ldark leading-relaxed">Skill One, Skill Two</p>
+
+            <p class="mt-6 text-porange text-xs font-bold uppercase tracking-widest">Languages</p>
+            <p class="text-xs text-ldark">English, Spanish</p>
+
+            <p class="mt-6 text-porange text-xs font-bold uppercase tracking-widest">Reference</p>
+            <p class="text-xs text-ldark leading-relaxed">Name · email</p>
+          </div>
+
+        </div>
       </div>
-      <hr class="my-4 border-gray-300">
-      <h3>Reference</h3>
-      <div class="flex gap-1 max-h-16 mb-6 mt-2">
-        <%= f.text_field :ref_name, class:"w-1/2 h-16 rounded-lg", placeholder:"Name"%>
-        <%= f.text_field :ref_email, class:"w-1/2 h-16 rounded-lg", placeholder:"Email"%>
-        <%= f.text_field :ref_phone, class:"w-1/2 h-16 rounded-lg", placeholder:"Phone number"%>
-      </div>
-      <%= f.submit 'Save', class:"w-1/5 justify-self-center focus:outline-none text-light hover:text-white bg-porange hover:bg-ldark focus:ring-4  font-medium rounded-lg text-lg px-5 py-2.5 dark:focus:ring-yellow-900" %>
+      <p class="mt-4 text-center text-xs text-ldark uppercase tracking-widest">Live preview coming soon</p>
     </div>
-  <% end %>
-  <%= image_tag 'template1.png', class:"h-[90vh] col-span-1 rounded justify-self-center max-lg:hidden" %>
-</div>
+
+  </div>
+</section>

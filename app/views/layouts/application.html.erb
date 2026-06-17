@@ -7,15 +7,17 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "fonts", "data-turbo-track": "reload" %>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header class="no-print absolute inset-x-0 top-0 z-10 flex justify-center px-4 pt-4">
+      <%= link_to 'STATION1', root_path, class: "text-4xl font-bold font-serif text-porange sm:text-5xl" %>
+    </header>
+    <p class="no-print notice"><%= notice %></p>
+    <p class="no-print alert"><%= alert %></p>
     <%= yield %>
-
   </body>
 </html>

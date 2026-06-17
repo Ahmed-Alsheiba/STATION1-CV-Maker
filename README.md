@@ -1,24 +1,32 @@
-# README
+# STATION1 (CV-Maker)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+STATION1 is a Ruby on Rails web app for building polished CVs and resumes. It gives users a simple flow to create profile details, education, work history, skills, languages, and references, then browse example CVs for inspiration.
 
-Things you may want to cover:
+## Objective
 
-* Ruby version
+The goal of this project is to make CV creation faster, easier, and more professional. It focuses on:
 
-* System dependencies
+- helping users create a clean resume in a guided flow
+- showcasing example CVs on the home experience
+- keeping the interface responsive and easy to use on mobile and desktop
 
-* Configuration
+## Tech Stack
 
-* Database creation
+- Ruby 3.4.6
+- Ruby on Rails 7.0.8
+- PostgreSQL
+- Tailwind CSS
+- Turbo Rails
+- Stimulus Rails
+- Importmap
+- Devise for authentication
+- Puma web server
+- Dartsass for stylesheet builds
+- Capybara and Selenium for system testing
 
-* Database initialization
+## Main Features
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Landing page with a responsive hero section
+- Example CV gallery
+- CV form workflow for creating and viewing resumes
+- User authentication support

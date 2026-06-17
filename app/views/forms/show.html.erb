@@ -1,67 +1,88 @@
-<button onclick="window.print()" class="no-print justify-self-center w-fit rounded-lg ml-[50%] mt-3 pl-5 pr-5 pt-2 pb-2 bg-porange text-light text-xl hover:text-ldark transition duration-300 ease-in-out">Print</button>
-<div class="grid grid-cols-3 h-screen p-4 gap-4" id="template">
-  <div class="col-span-2 grid grid-rows-6 gap-6" id="left">
-    <div class="grid grid-rows-2 text-7xl" id="name">
-      <h1><%= @form.first_name %></h1>
-      <h1 class="text-slate-600"><%= @form.last_name %></h1>
+<%# ================================================================ %>
+<%# show.html.erb — STATION1 CV Output                              %>
+<%# id="template" is targeted by the print CSS in                   %>
+<%# app/assets/stylesheets/application.scss — keep this id stable.  %>
+<%# ================================================================ %>
+
+<div class="bg-light py-12 flex justify-center print:p-0 print:bg-white">
+  <div class="grid grid-cols-3 gap-10 bg-white border border-beige shadow-2xl p-12 w-full max-w-[900px] print:border-0 print:shadow-none print:max-w-none" id="template">
+
+    <div class="col-span-2" id="left">
+      <h1 class="text-6xl font-serif font-black text-pdark leading-tight"><%= @form.first_name %></h1>
+      <h1 class="text-6xl font-serif font-black text-ldark leading-tight"><%= @form.last_name %></h1>
+
+      <div class="mt-10" id="about">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Profile</p>
+        <p class="mt-3 text-sm text-pdark leading-relaxed"><%= @form.about_you %></p>
+      </div>
+
+      <div class="mt-10" id="experience">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Experience</p>
+        <p class="mt-3 text-base font-bold text-pdark"><%= @form.prev_job_title %></p>
+        <p class="text-sm font-semibold text-ldark"><%= @form.prev_company %></p>
+        <p class="text-xs text-beige"><%= @form.prev_company_address %></p>
+        <p class="text-xs text-beige"><%= @form.prev_job_starting_year %> – <%= @form.prev_job_ending_year %></p>
+        <p class="mt-3 text-sm text-pdark leading-relaxed"><%= @form.about_prev_job %></p>
+      </div>
     </div>
-    <div id="about">
-      <h2 class="text-4xl">Profile</h2>
-      <p class="p-3 text-md tracking-wide"><%= @form.about_you %></p>
-    </div>
-    <div class="row-span-4" id="experience">
-      <h2 class="text-4xl">Experience</h2>
-      <p class="pl-2 text-xl font-medium text-slate-500"><%= @form.prev_job_title %></p>
-      <p class="pl-2 text-xl font-semibold text-slate-600"><%= @form.prev_company %></p>
-      <p class="pl-2 text-sm text-slate-400"><%= @form.prev_company_address %></p>
-      <p class="pl-2 text-sm text-slate-400"><%= @form.prev_job_starting_year %> - <%= @form.prev_job_ending_year %></p>
-      <p class="pl-3 pt-1 text-md tracking-wide"><%= @form.about_prev_job %></p>
-    </div>
-  </div>
-  <div id="right" class="p-1">
-    <div class="photo-card bg-gray-700 px-2 pb-2">
-      <% if @form.photo.attached? %>
-        <div id="photo">
-          <%= image_tag @form.photo, class:"aspect-square" %>
-        </div>
+
+    <div id="right">
+      <div class="bg-pdark p-4" id="photo">
+        <% if @form.photo.attached? %>
+          <%= image_tag @form.photo, class: "aspect-square w-full object-cover border border-beige" %>
         <% else %>
-        <%= image_tag "personalPhoto.png", class:"aspect-square" %>
-      <% end %>
-      <div class="text-center text-light text-xl text-pretty" id="contact">
-        <p>Email: <%= @form.email %></p>
-        <hr>
-        <p>Phone: <%= @form.phone %></p>
-        <hr>
-        <p>Address: <%= @form.address %></p>
+          <%= image_tag "personalPhoto.png", class: "aspect-square w-full object-cover border border-beige" %>
+        <% end %>
+        <div class="mt-4 text-light text-xs leading-relaxed" id="contact">
+          <p><%= @form.email %></p>
+          <p class="mt-1"><%= @form.phone %></p>
+          <p class="mt-1"><%= @form.address %></p>
+        </div>
+      </div>
+
+      <div class="border-l-2 border-beige mt-8 pl-4">
+        <div id="education">
+          <p class="text-porange text-xs font-bold uppercase tracking-widest">Education</p>
+          <p class="mt-2 text-sm font-bold text-pdark"><%= @form.degree %></p>
+          <p class="text-xs text-ldark"><%= @form.college %></p>
+          <p class="text-xs text-beige"><%= @form.degree_starting_year %> – <%= @form.degree_finishing_year %></p>
+        </div>
+
+        <div class="mt-6" id="skills">
+          <p class="text-porange text-xs font-bold uppercase tracking-widest">Skills</p>
+          <ul class="mt-2 space-y-1">
+            <% @skills.each do |skill| %>
+              <li class="text-xs text-pdark"><%= skill %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="mt-6" id="languages">
+          <p class="text-porange text-xs font-bold uppercase tracking-widest">Languages</p>
+          <ul class="mt-2 space-y-1">
+            <% @languages.each do |language| %>
+              <li class="text-xs text-pdark"><%= language %></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="mt-6" id="reference">
+          <p class="text-porange text-xs font-bold uppercase tracking-widest">Reference</p>
+          <p class="mt-2 text-xs text-pdark"><%= @form.ref_name %></p>
+          <p class="text-xs text-ldark"><%= @form.ref_email %> · <%= @form.ref_phone %></p>
+        </div>
       </div>
     </div>
-    <div class="border-l-2 border-slate-600">
-      <div class="pl-2 mt-5" id="education">
-        <h2 class="text-slate-800 text-2xl">Education</h2>
-        <p class="mt-3 font-bold text-slate-600 pl-3"><%= @form.degree %></p>
-        <p class="text-slate-500 pl-3"><%= @form.college %></p>
-        <p class="text-slate-400 pl-3"><%= @form.degree_starting_year %> - <%= @form.degree_finishing_year %></p>
-      </div>
-      <div class="pl-2 mt-5" id="skills">
-        <h2 class="text-slate-800 text-2xl">Skills</h2>
-        <ul class="list-inside text-xl">
-          <% @skills.each do |skill| %>
-            <li class="mt-1 text-slate-600 pl-3"><%= skill %></li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="pl-2 mt-5" id="languages">
-        <h2 class="text-slate-800 text-2xl">Languages</h2>
-        <ul class="list-inside text-xl">
-          <% @languages.each do |language| %>
-            <li class="mt-1 text-slate-600 pl-3"><%= language %></li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="pl-2 mt-5" id="reference">
-        <h2 class="text-slate-800 text-2xl">Reference</h2>
-        <p class="mt-3 text-slate-600 pl-3"><%= @form.ref_name %> | <%= @form.ref_email %> | <%= @form.ref_email %> </p>
-      </div>
-    </div>
+
   </div>
+</div>
+
+<div class="no-print bg-pdark py-6 flex justify-center">
+  <button onclick="window.print()"
+          class="group inline-flex items-center gap-3 px-8 py-4 bg-porange text-light text-sm font-bold uppercase tracking-widest hover:bg-light hover:text-pdark transition-colors duration-300">
+    Print / Save as PDF
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a1 1 0 001-1v-5H8v5a1 1 0 001 1zm0-12V4a1 1 0 011-1h4a1 1 0 011 1v5H9z"/>
+    </svg>
+  </button>
 </div>

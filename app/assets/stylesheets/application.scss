@@ -10,11 +10,26 @@ body{
 }
 
 @media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
   body {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+    margin: 0;
+    background: #fff;
   }
+
   .no-print {
     display: none;
+  }
+
+  #template {
+    width: 210mm;
+    height: 297mm;
+    overflow: hidden;
+    padding: 14mm;
   }
 }
