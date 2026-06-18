@@ -1,0 +1,113 @@
+<%# ================================================================ %>
+<%# _sales.html.erb — White Simple Sales Representative             %>
+<%# Periwinkle sidebar + white content. tpl-sales bleeds the sidebar.%>
+<%# ================================================================ %>
+
+<div class="grid grid-cols-[35%_65%] content-stretch bg-white border border-beige shadow-2xl w-full max-w-[900px] font-poppins text-sales-ink print:border-0 print:shadow-none print:max-w-none tpl-sales" id="template">
+
+  <%# ── LEFT SIDEBAR (periwinkle) ──────────────────────────────── %>
+  <aside class="bg-sales-sidebar p-8" id="sidebar">
+    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-white" id="photo">
+      <% if form.photo.attached? %>
+        <%= image_tag form.photo, class: "w-full h-full object-cover" %>
+      <% else %>
+        <%= image_tag "personalPhoto.png", class: "w-full h-full object-cover" %>
+      <% end %>
+    </div>
+
+    <div class="mt-8" id="contact">
+      <h2 class="font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-sales-dark">Contact</h2>
+      <div class="mt-3 space-y-2 text-xs leading-relaxed">
+        <p><%= form.phone %></p>
+        <p class="break-words"><%= form.email %></p>
+        <p><%= form.address %></p>
+      </div>
+    </div>
+
+    <div class="mt-8" id="education">
+      <h2 class="font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-sales-dark">Education</h2>
+      <% form.educations.each do |edu| %>
+        <div class="mt-3">
+          <p class="text-sm font-semibold text-sales-dark"><%= edu.institution %></p>
+          <p class="text-xs"><%= edu.degree %></p>
+          <p class="text-xs text-sales-muted"><%= cv_date_range(edu.start_date, edu.end_date) %></p>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="mt-8" id="skills">
+      <h2 class="font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-sales-dark">Skills</h2>
+      <ul class="mt-3 space-y-1.5 text-xs list-disc list-outside pl-4">
+        <% form.skills.each do |skill| %>
+          <li><%= skill.name %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if form.languages.any? %>
+      <div class="mt-8" id="languages">
+        <h2 class="font-montserrat text-sm font-bold uppercase tracking-[0.2em] text-sales-dark">Language</h2>
+        <ul class="mt-3 space-y-1.5 text-xs">
+          <% form.languages.each do |lang| %>
+            <li><%= lang.name %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </aside>
+
+  <%# ── RIGHT MAIN ─────────────────────────────────────────────── %>
+  <main class="p-10" id="main">
+    <header id="namebar">
+      <h1 class="font-montserrat text-5xl font-semibold uppercase tracking-wide text-sales-dark leading-none"><%= form.first_name %> <%= form.last_name %></h1>
+      <% if form.experiences.first&.job_title.present? %>
+        <p class="mt-2 text-base tracking-[0.15em] text-sales-muted"><%= form.experiences.first.job_title %></p>
+      <% end %>
+    </header>
+
+    <section class="mt-8" id="about">
+      <h2 class="font-montserrat text-base font-bold uppercase tracking-[0.2em] text-sales-dark pb-2 border-b border-sales-sidebar">About Me</h2>
+      <p class="mt-3 text-xs leading-relaxed"><%= form.about_you %></p>
+    </section>
+
+    <section class="mt-7" id="experience">
+      <h2 class="font-montserrat text-base font-bold uppercase tracking-[0.2em] text-sales-dark pb-2 border-b border-sales-sidebar">Work Experience</h2>
+      <div class="mt-4 space-y-5">
+        <% form.experiences.each do |exp| %>
+          <div>
+            <div class="flex justify-between items-baseline gap-3">
+              <p class="text-sm font-semibold text-sales-dark"><%= exp.job_title %></p>
+              <p class="text-xs text-sales-muted whitespace-nowrap"><%= cv_date_range(exp.start_date, exp.end_date) %></p>
+            </div>
+            <p class="text-xs font-medium text-sales-muted"><%= [exp.company, exp.location].reject(&:blank?).join(" · ") %></p>
+            <% bullets = cv_bullets(exp.description) %>
+            <% if bullets.any? %>
+              <ul class="mt-2 space-y-1 text-xs list-disc list-outside pl-4">
+                <% bullets.each do |b| %>
+                  <li><%= b %></li>
+                <% end %>
+              </ul>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+
+    <% if form.cv_references.any? %>
+      <section class="mt-7" id="reference">
+        <h2 class="font-montserrat text-base font-bold uppercase tracking-[0.2em] text-sales-dark pb-2 border-b border-sales-sidebar">References</h2>
+        <div class="mt-4 grid grid-cols-2 gap-6">
+          <% form.cv_references.each do |ref| %>
+            <div>
+              <p class="text-sm font-semibold text-sales-dark"><%= ref.name %></p>
+              <p class="text-xs text-sales-muted"><%= [ref.title, ref.company].reject(&:blank?).join(", ") %></p>
+              <p class="mt-1 text-xs"><span class="font-semibold">Phone:</span> <%= ref.phone %></p>
+              <p class="text-xs break-words"><span class="font-semibold">Email:</span> <%= ref.email %></p>
+            </div>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </main>
+
+</div>

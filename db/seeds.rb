@@ -1,125 +1,174 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
-# Create Users
-user1 = User.create!(
-  email: "emma@example.com",
-  password: "password1",
-  first_name: "Emma",
-  last_name: "Williams",
-  phone: "1234567890",
-  address: "123 Main St"
+# Seeds the database with example users and one CV per template.
+# Re-runnable: users are found-or-created and the seeded example CVs are keyed
+# by unique emails and rebuilt on each run (other forms are left untouched).
+
+user1 = User.find_or_create_by!(email: "emma@example.com") do |u|
+  u.password = "password1"
+  u.first_name = "Emma"
+  u.last_name  = "Williams"
+  u.phone      = "1234567890"
+  u.address    = "123 Main St"
+end
+
+user2 = User.find_or_create_by!(email: "liam@example.com") do |u|
+  u.password = "password2"
+  u.first_name = "Liam"
+  u.last_name  = "Brown"
+  u.phone      = "0987654321"
+  u.address    = "456 Elm St"
+end
+
+SEED_EMAILS = %w[
+  jane.default@example.com mark.special@example.com
+  korina@example.com sebastian@example.com donna@example.com
+]
+Form.where(email: SEED_EMAILS).destroy_all
+
+# ── Default template ─────────────────────────────────────────────
+Form.create!(
+  user: user1, template: :default,
+  first_name: "Jane", last_name: "Doe",
+  email: "jane.default@example.com", phone: "+1 555 0100", address: "123 Anywhere St., Any City",
+  about_you: "Versatile professional with a track record of delivering results across product and operations roles.",
+  educations_attributes: [
+    { degree: "BSc Computer Science", institution: "Tech University", start_date: "2015", end_date: "2019", position: 0 }
+  ],
+  skills_attributes: [
+    { name: "Ruby on Rails", position: 0 }, { name: "JavaScript", position: 1 }, { name: "SQL", position: 2 }
+  ],
+  languages_attributes: [
+    { name: "English", position: 0 }, { name: "French", position: 1 }
+  ],
+  experiences_attributes: [
+    { job_title: "Software Developer", company: "Acme Corp", location: "Remote",
+      start_date: "2019", end_date: "2024",
+      description: "Built and maintained customer-facing web applications and internal tooling.", position: 0 }
+  ],
+  cv_references_attributes: [
+    { name: "John Smith", title: "Engineering Manager", company: "Acme Corp", email: "john@example.com", phone: "555-1234", position: 0 }
+  ]
 )
 
-user2 = User.create!(
-  email: "liam@example.com",
-  password: "password2",
-  first_name: "Liam",
-  last_name: "Brown",
-  phone: "0987654321",
-  address: "456 Elm St"
+# ── Special template ─────────────────────────────────────────────
+Form.create!(
+  user: user2, template: :special,
+  first_name: "Mark", last_name: "Reed",
+  email: "mark.special@example.com", phone: "+1 555 0123", address: "456 Elm St., Any City",
+  about_you: "Operations lead focused on process, people and measurable improvement.",
+  educations_attributes: [
+    { degree: "BA Business Administration", institution: "State University", start_date: "2012", end_date: "2016", position: 0 }
+  ],
+  skills_attributes: [
+    { name: "Project Management", position: 0 }, { name: "Budgeting", position: 1 }, { name: "Leadership", position: 2 }
+  ],
+  languages_attributes: [
+    { name: "English", position: 0 }, { name: "German", position: 1 }
+  ],
+  experiences_attributes: [
+    { job_title: "Operations Manager", company: "Globex", location: "New York",
+      start_date: "2018", end_date: "Present",
+      description: "Led a team of 12 and cut fulfillment time by 30%.", position: 0 }
+  ],
+  cv_references_attributes: [
+    { name: "Sara Lin", title: "Director", company: "Globex", email: "sara@example.com", phone: "555-7788", position: 0 }
+  ]
 )
 
-# Create Forms
+# ── Designer template (White & Beige Minimalist) ─────────────────
 Form.create!(
-  user: user1,
-  first_name: "Alice",
-  last_name: "Smith",
-  phone: "1234567890",
-  email: "alice@example.com",
-  address: "123 Main St",
-  degree: "BSc Computer Science",
-  college: "Tech University",
-  degree_starting_year: 2015,
-  degree_finishing_year: 2019,
-  skills: "Ruby, Rails, JavaScript",
-  languages: "English, French",
-  prev_job_title: "Developer",
-  prev_company: "Acme Corp",
-  prev_company_address: "789 Oak Ave",
-  prev_job_starting_year: 2019,
-  prev_job_ending_year: 2022,
-  about_prev_job: "Worked on web applications. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  about_you: "Passionate developer. Team player. Quick learner. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  ref_name: "Jane Doe",
-  ref_email: "jane@example.com",
-  ref_phone: "5551234567"
+  user: user1, template: :designer,
+  first_name: "Korina", last_name: "Villanueva",
+  email: "korina@example.com", phone: "+123-456-7890", address: "123 Anywhere St., Any City",
+  about_you: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet sem nec risus egestas accumsan. In enim nunc, tincidunt ut quam eget, luctus sollicitudo neque.",
+  educations_attributes: [
+    { degree: "Bachelor of Design", institution: "Really Great University", start_date: "2012", end_date: "2016", position: 0 },
+    { degree: "Master of Design", institution: "Really Great University", start_date: "2016", end_date: "2020", position: 1 }
+  ],
+  skills_attributes: [
+    { name: "Organized", level: 5, position: 0 },
+    { name: "Communication", level: 4, position: 1 },
+    { name: "Teamwork", level: 4, position: 2 },
+    { name: "Meeting deadlines", level: 3, position: 3 },
+    { name: "Critical thinking", level: 4, position: 4 }
+  ],
+  languages_attributes: [
+    { name: "French", level: 3, position: 0 },
+    { name: "English", level: 5, position: 1 },
+    { name: "Spanish", level: 2, position: 2 }
+  ],
+  experiences_attributes: [
+    { job_title: "Graphic Designer", company: "Aldenaire & Partners", start_date: "Jan 2021", end_date: "Mar 2022",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet sem nec risus egestas accumsan.", position: 0 },
+    { job_title: "Graphic Designer", company: "Warner & Spencer", start_date: "Jan 2020", end_date: "Dec 2020",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet sem nec risus egestas accumsan.", position: 1 },
+    { job_title: "Graphic Designer", company: "Ingoude Company", start_date: "Jan 2017", end_date: "Dec 2019",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sit amet sem nec risus egestas accumsan.", position: 2 }
+  ],
+  cv_references_attributes: [
+    { name: "Alfredo Torres", title: "Director", company: "Aldenaire & Partners", phone: "+123-456-7890", position: 0 }
+  ]
 )
 
+# ── Minimal template (Clean Real Estate) ─────────────────────────
 Form.create!(
-  user: user2,
-  first_name: "Bob",
-  last_name: "Johnson",
-  phone: "0987654321",
-  email: "bob@example.com",
-  address: "456 Elm St",
-  degree: "BA Design",
-  college: "Art College",
-  degree_starting_year: 2014,
-  degree_finishing_year: 2018,
-  skills: "Photoshop, Illustrator",
-  languages: "English, Spanish",
-  prev_job_title: "Designer",
-  prev_company: "Design Studio",
-  prev_company_address: "321 Pine Rd",
-  prev_job_starting_year: 2018,
-  prev_job_ending_year: 2021,
-  about_prev_job: "Designed marketing materials.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  about_you: "Creative and detail-oriented.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  ref_name: "John Smith",
-  ref_email: "john@example.com",
-  ref_phone: "5559876543"
-)
-Form.create!(
-  user: user1,
-  first_name: "Alice",
-  last_name: "Smith",
-  phone: "1234567890",
-  email: "alice@example.com",
-  address: "123 Main St",
-  degree: "MSc Data Science",
-  college: "Tech University",
-  degree_starting_year: 2019,
-  degree_finishing_year: 2021,
-  skills: "Python, Machine Learning, SQL",
-  languages: "English, French",
-  prev_job_title: "Data Analyst",
-  prev_company: "DataCorp",
-  prev_company_address: "101 Maple St",
-  prev_job_starting_year: 2021,
-  prev_job_ending_year: 2023,
-  about_prev_job: "Analyzed large datasets and built predictive models. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  about_you: "Data enthusiast with strong analytical skills.  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  ref_name: "Emily White",
-  ref_email: "emily@example.com",
-  ref_phone: "5552223333"
+  user: user2, template: :minimal,
+  first_name: "Sebastian", last_name: "Bennett",
+  email: "sebastian@example.com", phone: "123-456-7890", address: "123 Anywhere St., Any City",
+  about_you: "I am an experienced Real Estate Agent with a passion for helping clients find their dream homes. I have extensive experience in the industry, including more than 5 years working as a real estate agent. I am knowledgeable about the latest market trends and understand the nuances of the real estate market. I pride myself on my ability to negotiate the best deals for my clients and to navigate complex real estate agreements. I am highly organized, detail-oriented, and have strong communication skills.",
+  educations_attributes: [
+    { degree: "B.A. in Business Administration", institution: "University", start_date: "2010", end_date: "2014", position: 0 }
+  ],
+  certifications_attributes: [
+    { name: "Licensed Real Estate Agent", position: 0 },
+    { name: "Certified Real Estate Negotiator", position: 1 },
+    { name: "Top Sales Agent Award 2016", position: 2 }
+  ],
+  skills_attributes: [
+    { name: "Knowledge of the local real estate market", position: 0 },
+    { name: "Communication skills", position: 1 },
+    { name: "Negotiation skills", position: 2 },
+    { name: "Problem-solving skills", position: 3 },
+    { name: "Organization and time management skills", position: 4 }
+  ],
+  experiences_attributes: [
+    { job_title: "Real Estate Agent", company: "Really Great Company", start_date: "June 2015", end_date: "Present",
+      description: "Negotiate contracts and complex real estate transactions\nProvide excellent customer service to clients\nUpdate and maintain client files\nResearch and monitor the local real estate market\nDevelop marketing campaigns for properties\nUtilize social media platforms to market properties\nParticipate in open houses and home tours", position: 0 },
+    { job_title: "Real Estate Agent", company: "Really Great Company", start_date: "June 2014", end_date: "2015",
+      description: "Prepared contracts and documents for transactions\nConducted market research on local real estate trends\nCompiled property information and photos\nManaged client database and contact information\nScheduled property tours and open houses", position: 1 }
+  ]
 )
 
+# ── Sales template (Simple Sales Representative) ─────────────────
 Form.create!(
-  user: user2,
-  first_name: "Bob",
-  last_name: "Johnson",
-  phone: "0987654321",
-  email: "bob@example.com",
-  address: "456 Elm St",
-  degree: "MA Fine Arts",
-  college: "Art College",
-  degree_starting_year: 2018,
-  degree_finishing_year: 2020,
-  skills: "Painting, Sculpture",
-  languages: "English, Spanish",
-  prev_job_title: "Art Instructor",
-  prev_company: "Creative Arts Center",
-  prev_company_address: "202 Birch Blvd",
-  prev_job_starting_year: 2020,
-  prev_job_ending_year: 2022,
-  about_prev_job: "Taught art classes and curated exhibitions. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  about_you: "Experienced artist and educator. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-  ref_name: "Sarah Green",
-  ref_email: "sarah@example.com",
-  ref_phone: "5554445555"
+  user: user1, template: :sales,
+  first_name: "Donna", last_name: "Stroupe",
+  email: "donna@example.com", phone: "+123-456-7890", address: "123 Anywhere St., Any City",
+  about_you: "I am a Sales Representative who is a professional who initializes and manages relationships with customers. They serve as the point of contact and lead from initial outreach through the making of the final purchase by them or someone in their household.",
+  educations_attributes: [
+    { degree: "BA Sales and Commerce", institution: "Wardiere University", start_date: "2011", end_date: "2015", position: 0 },
+    { degree: "BA Sales and Commerce", institution: "Wardiere University", start_date: "2011", end_date: "2015", position: 1 }
+  ],
+  skills_attributes: [
+    { name: "Fast-moving Consumer Goods", position: 0 },
+    { name: "Packaged Consumer Goods Sales", position: 1 },
+    { name: "Corporate sales account management", position: 2 },
+    { name: "Experience in retail", position: 3 }
+  ],
+  languages_attributes: [
+    { name: "English", position: 0 }, { name: "French", position: 1 }
+  ],
+  experiences_attributes: [
+    { job_title: "Consumer Goods Seller", company: "Timmerman Industries", start_date: "Aug 2018", end_date: "Present",
+      description: "Offer consumer goods packages to corporate and clients\nMeet with clients every quarter to update or renew services\nTrain junior sales agents", position: 0 },
+    { job_title: "FMCG Sales Agent", company: "Timmerman Industries", start_date: "Jul 2015", end_date: "Aug 2018",
+      description: "Visited corporate client offices to offer latest products\nBuilt relationships with clients to maintain sales goals and create new opportunities", position: 1 },
+    { job_title: "Sales Agent", company: "Timmerman Industries", start_date: "Aug 2014", end_date: "Jul 2015",
+      description: "Visited corporate client offices to offer latest products", position: 2 }
+  ],
+  cv_references_attributes: [
+    { name: "Estelle Darcy", title: "CEO", company: "Wardiere Inc.", phone: "+123-456-7890", email: "hello@reallygreatsite.com", position: 0 },
+    { name: "Harper Russo", title: "CEO", company: "Wardiere Inc.", phone: "+123-456-7890", email: "hello@reallygreatsite.com", position: 1 }
+  ]
 )
+
+puts "Seeded #{Form.where(email: SEED_EMAILS).count} example CVs (one per template)."

@@ -1,0 +1,10 @@
+<div data-nested-form-row class="flex flex-wrap items-end gap-3">
+  <div class="flex-1 min-w-[160px]">
+    <%= f.text_field :name, class: input_class, placeholder: "Language" %>
+  </div>
+  <div class="w-44">
+    <%= f.select :level, (1..5).to_a, { include_blank: "Rating (optional)" }, class: input_class %>
+  </div>
+  <%= f.hidden_field :_destroy %>
+  <button type="button" data-action="nested-form#remove" class="h-14 text-xs font-bold uppercase tracking-widest text-porange hover:text-pdark transition-colors duration-200">Remove</button>
+</div>

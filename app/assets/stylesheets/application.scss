@@ -30,6 +30,13 @@ body{
     width: 210mm;
     height: 297mm;
     overflow: hidden;
+    padding: 0; // full-bleed by default; each template manages its own padding
+  }
+
+  // The original Default template was designed around a 14mm page frame.
+  // The other templates have full-bleed colored sidebars/headers that must
+  // reach the page edge, so they keep padding:0 and pad their inner columns.
+  #template.tpl-default {
     padding: 14mm;
   }
 }

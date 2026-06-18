@@ -1,0 +1,15 @@
+<div data-nested-form-row class="border-2 border-beige p-4 space-y-3">
+  <div class="flex flex-wrap gap-3">
+    <%= f.text_field :name, class: input_class + " sm:w-[calc(50%-0.375rem)]", placeholder: "Name" %>
+    <%= f.text_field :title, class: input_class + " sm:w-[calc(50%-0.375rem)]", placeholder: "Title / Role" %>
+  </div>
+  <%= f.text_field :company, class: input_class, placeholder: "Company" %>
+  <div class="flex flex-wrap gap-3">
+    <%= f.text_field :phone, class: input_class + " sm:w-[calc(50%-0.375rem)]", placeholder: "Phone" %>
+    <%= f.email_field :email, class: input_class + " sm:w-[calc(50%-0.375rem)]", placeholder: "Email" %>
+  </div>
+  <div class="flex justify-end">
+    <%= f.hidden_field :_destroy %>
+    <button type="button" data-action="nested-form#remove" class="text-xs font-bold uppercase tracking-widest text-porange hover:text-pdark transition-colors duration-200">Remove</button>
+  </div>
+</div>

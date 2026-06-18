@@ -1,0 +1,86 @@
+<%# ================================================================ %>
+<%# _default.html.erb — STATION1 CV Output, Default template       %>
+<%# id="template" is targeted by the print CSS in                   %>
+<%# app/assets/stylesheets/application.scss — keep this id stable.  %>
+<%# ================================================================ %>
+
+<div class="grid grid-cols-3 gap-10 bg-white border border-beige shadow-2xl p-12 w-full max-w-[900px] print:border-0 print:shadow-none print:max-w-none tpl-default" id="template">
+
+  <div class="col-span-2" id="left">
+    <h1 class="text-6xl font-serif font-black text-pdark leading-tight"><%= form.first_name %></h1>
+    <h1 class="text-6xl font-serif font-black text-ldark leading-tight"><%= form.last_name %></h1>
+
+    <div class="mt-10" id="about">
+      <p class="text-porange text-xs font-bold uppercase tracking-widest">Profile</p>
+      <p class="mt-3 text-sm text-pdark leading-relaxed"><%= form.about_you %></p>
+    </div>
+
+    <div class="mt-10" id="experience">
+      <p class="text-porange text-xs font-bold uppercase tracking-widest">Experience</p>
+      <% form.experiences.each do |exp| %>
+        <div class="mt-3">
+          <p class="text-base font-bold text-pdark"><%= exp.job_title %></p>
+          <p class="text-sm font-semibold text-ldark"><%= exp.company %></p>
+          <p class="text-xs text-beige"><%= exp.location %></p>
+          <p class="text-xs text-beige"><%= cv_date_range(exp.start_date, exp.end_date) %></p>
+          <p class="mt-2 text-sm text-pdark leading-relaxed"><%= exp.description %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="right">
+    <div class="bg-pdark p-4" id="photo">
+      <% if form.photo.attached? %>
+        <%= image_tag form.photo, class: "aspect-square w-full object-cover border border-beige" %>
+      <% else %>
+        <%= image_tag "personalPhoto.png", class: "aspect-square w-full object-cover border border-beige" %>
+      <% end %>
+      <div class="mt-4 text-light text-xs leading-relaxed" id="contact">
+        <p><%= form.email %></p>
+        <p class="mt-1"><%= form.phone %></p>
+        <p class="mt-1"><%= form.address %></p>
+      </div>
+    </div>
+
+    <div class="border-l-2 border-beige mt-8 pl-4">
+      <div id="education">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Education</p>
+        <% form.educations.each do |edu| %>
+          <div class="mt-2">
+            <p class="text-sm font-bold text-pdark"><%= edu.degree %></p>
+            <p class="text-xs text-ldark"><%= edu.institution %></p>
+            <p class="text-xs text-beige"><%= cv_date_range(edu.start_date, edu.end_date) %></p>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-6" id="skills">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Skills</p>
+        <ul class="mt-2 space-y-1">
+          <% form.skills.each do |skill| %>
+            <li class="text-xs text-pdark"><%= skill.name %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="mt-6" id="languages">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Languages</p>
+        <ul class="mt-2 space-y-1">
+          <% form.languages.each do |language| %>
+            <li class="text-xs text-pdark"><%= language.name %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="mt-6" id="reference">
+        <p class="text-porange text-xs font-bold uppercase tracking-widest">Reference</p>
+        <% form.cv_references.each do |ref| %>
+          <p class="mt-2 text-xs text-pdark"><%= ref.name %></p>
+          <p class="text-xs text-ldark"><%= ref.email %> · <%= ref.phone %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>

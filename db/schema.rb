@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_25_130520) do
+ActiveRecord::Schema[7.0].define(version: 2026_06_18_090008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,54 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_25_130520) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "certifications", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "name"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_certifications_on_form_id"
+  end
+
+  create_table "cv_references", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "name"
+    t.string "title"
+    t.string "company"
+    t.string "phone"
+    t.string "email"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_cv_references_on_form_id"
+  end
+
+  create_table "educations", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "degree"
+    t.string "institution"
+    t.string "start_date"
+    t.string "end_date"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_educations_on_form_id"
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "job_title"
+    t.string "company"
+    t.string "location"
+    t.string "start_date"
+    t.string "end_date"
+    t.text "description"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_experiences_on_form_id"
+  end
+
   create_table "forms", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -51,23 +99,29 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_25_130520) do
     t.string "phone"
     t.string "email"
     t.string "address"
-    t.string "degree"
-    t.string "college"
-    t.integer "degree_starting_year"
-    t.integer "degree_finishing_year"
-    t.string "skills"
-    t.string "languages"
-    t.string "prev_job_title"
-    t.string "prev_company"
-    t.string "prev_company_address"
-    t.integer "prev_job_starting_year"
-    t.integer "prev_job_ending_year"
-    t.text "about_prev_job"
     t.text "about_you"
-    t.string "ref_name"
-    t.string "ref_email"
-    t.string "ref_phone"
+    t.integer "template", default: 0, null: false
     t.index ["user_id"], name: "index_forms_on_user_id"
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "name"
+    t.integer "level"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_languages_on_form_id"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.bigint "form_id", null: false
+    t.string "name"
+    t.integer "level"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["form_id"], name: "index_skills_on_form_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -88,5 +142,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_25_130520) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "certifications", "forms"
+  add_foreign_key "cv_references", "forms"
+  add_foreign_key "educations", "forms"
+  add_foreign_key "experiences", "forms"
   add_foreign_key "forms", "users"
+  add_foreign_key "languages", "forms"
+  add_foreign_key "skills", "forms"
 end

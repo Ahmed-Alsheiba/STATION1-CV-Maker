@@ -11,8 +11,8 @@
       Create Your CV
     </h1>
     <p class="mt-4 text-beige text-lg max-w-lg leading-relaxed">
-      Fill in each section below — your CV preview updates with the same structure
-      you'll see on the finished page.
+      Fill in each section below — add as many experiences, education entries,
+      skills and references as you need, then pick a template and print.
     </p>
   </div>
 </section>
@@ -24,12 +24,56 @@
 
     <% input_class = "w-full h-14 px-4 bg-light border-2 border-beige text-pdark placeholder-ldark/50 focus:outline-none focus:border-porange transition-colors duration-200" %>
     <% textarea_class = "w-full px-4 py-3 bg-light border-2 border-beige text-pdark placeholder-ldark/50 focus:outline-none focus:border-porange transition-colors duration-200" %>
+    <% add_button_class = "inline-flex items-center gap-2 px-5 py-3 border-2 border-pdark text-pdark text-xs font-bold uppercase tracking-widest hover:bg-pdark hover:text-light transition-colors duration-200" %>
 
     <%= form_with model: @form, class: "space-y-8", local: true do |f| %>
 
-      <%# 01 — Personal Photo %>
-      <div class="bg-white border-2 border-beige p-8" data-controller="photo-preview">
+      <%# 01 — Choose a Template %>
+      <div class="bg-white border-2 border-beige p-8">
         <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">01</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Choose a Template</h3>
+        <div class="flex flex-wrap gap-4">
+          <label class="cursor-pointer flex-1 min-w-[200px]">
+            <%= f.radio_button :template, "default", class: "peer hidden" %>
+            <div class="border-2 border-beige p-6 peer-checked:border-porange transition-colors duration-200">
+              <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">Default</p>
+              <p class="font-serif text-lg font-black text-pdark">Classic two-column layout</p>
+            </div>
+          </label>
+          <label class="cursor-pointer flex-1 min-w-[200px]">
+            <%= f.radio_button :template, "special", class: "peer hidden" %>
+            <div class="border-2 border-beige p-6 peer-checked:border-porange transition-colors duration-200">
+              <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">Special</p>
+              <p class="font-serif text-lg font-black text-pdark">Sidebar professional layout</p>
+            </div>
+          </label>
+          <label class="cursor-pointer flex-1 min-w-[200px]">
+            <%= f.radio_button :template, "designer", class: "peer hidden" %>
+            <div class="border-2 border-beige p-6 peer-checked:border-porange transition-colors duration-200">
+              <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">Designer</p>
+              <p class="font-serif text-lg font-black text-pdark">Beige sidebar, skill ratings</p>
+            </div>
+          </label>
+          <label class="cursor-pointer flex-1 min-w-[200px]">
+            <%= f.radio_button :template, "minimal", class: "peer hidden" %>
+            <div class="border-2 border-beige p-6 peer-checked:border-porange transition-colors duration-200">
+              <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">Minimal</p>
+              <p class="font-serif text-lg font-black text-pdark">Black-on-white, no photo</p>
+            </div>
+          </label>
+          <label class="cursor-pointer flex-1 min-w-[200px]">
+            <%= f.radio_button :template, "sales", class: "peer hidden" %>
+            <div class="border-2 border-beige p-6 peer-checked:border-porange transition-colors duration-200">
+              <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">Sales</p>
+              <p class="font-serif text-lg font-black text-pdark">Periwinkle sidebar, references</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <%# 02 — Personal Photo %>
+      <div class="bg-white border-2 border-beige p-8" data-controller="photo-preview">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">02</p>
         <h3 class="font-serif text-2xl font-black text-pdark mb-6">Personal Photo</h3>
 
         <div class="flex items-center gap-6">
@@ -44,7 +88,7 @@
 
           <div>
             <p class="text-sm font-bold uppercase tracking-widest text-pdark">Click the circle to upload</p>
-            <p class="mt-1 text-sm text-ldark">PNG or JPEG</p>
+            <p class="mt-1 text-sm text-ldark">PNG or JPEG · used by the Default, Special, Designer and Sales templates</p>
             <button type="button" data-photo-preview-target="removeButton" data-action="click->photo-preview#remove"
                     class="hidden mt-2 text-sm font-bold uppercase tracking-widest text-porange hover:text-pdark transition-colors duration-200">
               Remove photo
@@ -53,9 +97,9 @@
         </div>
       </div>
 
-      <%# 02 — Your Name %>
+      <%# 03 — Your Name %>
       <div class="bg-white border-2 border-beige p-8">
-        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">02</p>
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">03</p>
         <h3 class="font-serif text-2xl font-black text-pdark mb-6">Your Name</h3>
         <div class="flex flex-wrap gap-4">
           <%= f.text_field :first_name, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "First name" %>
@@ -63,9 +107,9 @@
         </div>
       </div>
 
-      <%# 03 — Contact Information %>
+      <%# 04 — Contact Information %>
       <div class="bg-white border-2 border-beige p-8">
-        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">03</p>
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">04</p>
         <h3 class="font-serif text-2xl font-black text-pdark mb-6">Contact Information</h3>
         <div class="flex flex-wrap gap-4">
           <%= f.email_field :email, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Email" %>
@@ -73,71 +117,134 @@
         </div>
       </div>
 
-      <%# 04 — Address %>
+      <%# 05 — Address %>
       <div class="bg-white border-2 border-beige p-8">
-        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">04</p>
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">05</p>
         <h3 class="font-serif text-2xl font-black text-pdark mb-6">Address</h3>
         <%= f.text_field :address, class: input_class, placeholder: "Address" %>
       </div>
 
-      <%# 05 — Education %>
-      <div class="bg-white border-2 border-beige p-8">
-        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">05</p>
-        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Education</h3>
-        <div class="flex flex-wrap gap-4">
-          <%= f.text_field :degree, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Degree" %>
-          <%= f.text_field :college, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "College" %>
-        </div>
-        <p class="mt-6 text-xs font-bold uppercase tracking-widest text-ldark">Years Attended</p>
-        <div class="mt-3 flex flex-wrap gap-4">
-          <%= f.number_field :degree_starting_year, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Starting Year", min: 1900, max: Date.today.year %>
-          <%= f.number_field :degree_finishing_year, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Finishing Year", min: 1900 %>
-        </div>
-      </div>
-
-      <%# 06 — Skills & Languages %>
+      <%# 06 — About You (Profile) %>
       <div class="bg-white border-2 border-beige p-8">
         <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">06</p>
-        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Skills &amp; Languages</h3>
-        <div class="flex flex-wrap gap-4">
-          <%= f.text_field :skills, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Skills" %>
-          <%= f.text_field :languages, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Languages" %>
-        </div>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Profile / About You</h3>
+        <%= f.text_area :about_you, class: textarea_class + " h-32", placeholder: "A short summary of who you are and what you're looking for." %>
       </div>
 
-      <%# 07 — Previous Job %>
+      <%# 07 — Experience (repeatable) %>
       <div class="bg-white border-2 border-beige p-8">
         <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">07</p>
-        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Previous Job</h3>
-        <div class="flex flex-wrap gap-4">
-          <%= f.text_field :prev_job_title, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Previous Job Title" %>
-          <%= f.text_field :prev_company, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Previous Company" %>
-        </div>
-        <div class="mt-4 flex flex-wrap gap-4">
-          <%= f.text_field :prev_company_address, class: input_class + " sm:w-[calc(50%-0.5rem)]", placeholder: "Company Address" %>
-          <%= f.number_field :prev_job_starting_year, class: input_class + " sm:w-[calc(25%-0.75rem)]", placeholder: "Starting Year" %>
-          <%= f.number_field :prev_job_ending_year, class: input_class + " sm:w-[calc(25%-0.75rem)]", placeholder: "Finishing Year" %>
-        </div>
-        <div class="mt-4">
-          <%= f.text_area :about_prev_job, class: textarea_class + " h-32", placeholder: "About previous job" %>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Experience</h3>
+        <div data-controller="nested-form" class="space-y-4">
+          <div data-nested-form-target="rows" class="space-y-4">
+            <%= f.fields_for :experiences do |ef| %>
+              <%= render "forms/fields/experience_fields", f: ef, input_class: input_class, textarea_class: textarea_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :experiences, Experience.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/experience_fields", f: ef, input_class: input_class, textarea_class: textarea_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Experience</button>
         </div>
       </div>
 
-      <%# 08 — About You %>
+      <%# 08 — Education (repeatable) %>
       <div class="bg-white border-2 border-beige p-8">
         <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">08</p>
-        <h3 class="font-serif text-2xl font-black text-pdark mb-6">About You</h3>
-        <%= f.text_area :about_you, class: textarea_class + " h-32", placeholder: "About you" %>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Education</h3>
+        <div data-controller="nested-form" class="space-y-4">
+          <div data-nested-form-target="rows" class="space-y-4">
+            <%= f.fields_for :educations do |ef| %>
+              <%= render "forms/fields/education_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :educations, Education.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/education_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Education</button>
+        </div>
       </div>
 
-      <%# 09 — Reference %>
+      <%# 09 — Skills (repeatable, optional rating) %>
       <div class="bg-white border-2 border-beige p-8">
         <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">09</p>
-        <h3 class="font-serif text-2xl font-black text-pdark mb-6">Reference</h3>
-        <div class="flex flex-wrap gap-4">
-          <%= f.text_field :ref_name, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Name" %>
-          <%= f.text_field :ref_email, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Email" %>
-          <%= f.text_field :ref_phone, class: input_class + " sm:w-[calc(33.33%-0.67rem)]", placeholder: "Phone number" %>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-2">Skills</h3>
+        <p class="text-sm text-ldark mb-6">The optional rating shows as dots on the Designer template.</p>
+        <div data-controller="nested-form" class="space-y-3">
+          <div data-nested-form-target="rows" class="space-y-3">
+            <%= f.fields_for :skills do |ef| %>
+              <%= render "forms/fields/skill_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :skills, Skill.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/skill_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Skill</button>
+        </div>
+      </div>
+
+      <%# 10 — Languages (repeatable, optional rating) %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">10</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-2">Languages</h3>
+        <p class="text-sm text-ldark mb-6">The optional rating shows as bars on the Designer template.</p>
+        <div data-controller="nested-form" class="space-y-3">
+          <div data-nested-form-target="rows" class="space-y-3">
+            <%= f.fields_for :languages do |ef| %>
+              <%= render "forms/fields/language_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :languages, Language.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/language_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Language</button>
+        </div>
+      </div>
+
+      <%# 11 — Awards & Certifications (repeatable) %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">11</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-2">Awards &amp; Certifications</h3>
+        <p class="text-sm text-ldark mb-6">Shown on the Minimal template.</p>
+        <div data-controller="nested-form" class="space-y-3">
+          <div data-nested-form-target="rows" class="space-y-3">
+            <%= f.fields_for :certifications do |ef| %>
+              <%= render "forms/fields/certification_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :certifications, Certification.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/certification_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Award</button>
+        </div>
+      </div>
+
+      <%# 12 — References (repeatable) %>
+      <div class="bg-white border-2 border-beige p-8">
+        <p class="text-porange text-xs font-bold uppercase tracking-[0.3em] mb-2">12</p>
+        <h3 class="font-serif text-2xl font-black text-pdark mb-6">References</h3>
+        <div data-controller="nested-form" class="space-y-4">
+          <div data-nested-form-target="rows" class="space-y-4">
+            <%= f.fields_for :cv_references do |ef| %>
+              <%= render "forms/fields/reference_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </div>
+          <template data-nested-form-target="template">
+            <%= f.fields_for :cv_references, CvReference.new, child_index: "NEW_RECORD" do |ef| %>
+              <%= render "forms/fields/reference_fields", f: ef, input_class: input_class %>
+            <% end %>
+          </template>
+          <button type="button" data-action="nested-form#add" class="<%= add_button_class %>">+ Add Reference</button>
         </div>
       </div>
 
@@ -148,9 +255,8 @@
     <% end %>
 
     <%# ─── CV PREVIEW MOCKUP ───────────────────────────────────── %>
-    <%# Static placeholder for now — mirrors forms/show.html.erb's section
-        names and left/right split so wiring it to live @form data later
-        is a mechanical swap of this sample text %>
+    <%# Static placeholder — mirrors the finished page's section names and
+        left/right split. Wiring it to live @form data is a future follow-up. %>
     <div class="hidden lg:block lg:sticky lg:top-24 self-start pt-8">
       <%# A4 ratio (210mm × 297mm) so the placeholder reads as an actual page %>
       <div class="bg-white border border-beige shadow-2xl aspect-[210/297] w-full p-8 xl:p-10 overflow-hidden">

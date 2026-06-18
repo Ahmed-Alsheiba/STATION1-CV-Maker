@@ -1,80 +1,12 @@
 <%# ================================================================ %>
 <%# show.html.erb — STATION1 CV Output                              %>
-<%# id="template" is targeted by the print CSS in                   %>
-<%# app/assets/stylesheets/application.scss — keep this id stable.  %>
+<%# Page chrome only. The actual CV card markup lives in            %>
+<%# app/views/forms/templates/_default.html.erb and _special.html.erb, %>
+<%# selected at render time based on @form.template.                %>
 <%# ================================================================ %>
 
-<div class="bg-light py-12 flex justify-center print:p-0 print:bg-white">
-  <div class="grid grid-cols-3 gap-10 bg-white border border-beige shadow-2xl p-12 w-full max-w-[900px] print:border-0 print:shadow-none print:max-w-none" id="template">
-
-    <div class="col-span-2" id="left">
-      <h1 class="text-6xl font-serif font-black text-pdark leading-tight"><%= @form.first_name %></h1>
-      <h1 class="text-6xl font-serif font-black text-ldark leading-tight"><%= @form.last_name %></h1>
-
-      <div class="mt-10" id="about">
-        <p class="text-porange text-xs font-bold uppercase tracking-widest">Profile</p>
-        <p class="mt-3 text-sm text-pdark leading-relaxed"><%= @form.about_you %></p>
-      </div>
-
-      <div class="mt-10" id="experience">
-        <p class="text-porange text-xs font-bold uppercase tracking-widest">Experience</p>
-        <p class="mt-3 text-base font-bold text-pdark"><%= @form.prev_job_title %></p>
-        <p class="text-sm font-semibold text-ldark"><%= @form.prev_company %></p>
-        <p class="text-xs text-beige"><%= @form.prev_company_address %></p>
-        <p class="text-xs text-beige"><%= @form.prev_job_starting_year %> – <%= @form.prev_job_ending_year %></p>
-        <p class="mt-3 text-sm text-pdark leading-relaxed"><%= @form.about_prev_job %></p>
-      </div>
-    </div>
-
-    <div id="right">
-      <div class="bg-pdark p-4" id="photo">
-        <% if @form.photo.attached? %>
-          <%= image_tag @form.photo, class: "aspect-square w-full object-cover border border-beige" %>
-        <% else %>
-          <%= image_tag "personalPhoto.png", class: "aspect-square w-full object-cover border border-beige" %>
-        <% end %>
-        <div class="mt-4 text-light text-xs leading-relaxed" id="contact">
-          <p><%= @form.email %></p>
-          <p class="mt-1"><%= @form.phone %></p>
-          <p class="mt-1"><%= @form.address %></p>
-        </div>
-      </div>
-
-      <div class="border-l-2 border-beige mt-8 pl-4">
-        <div id="education">
-          <p class="text-porange text-xs font-bold uppercase tracking-widest">Education</p>
-          <p class="mt-2 text-sm font-bold text-pdark"><%= @form.degree %></p>
-          <p class="text-xs text-ldark"><%= @form.college %></p>
-          <p class="text-xs text-beige"><%= @form.degree_starting_year %> – <%= @form.degree_finishing_year %></p>
-        </div>
-
-        <div class="mt-6" id="skills">
-          <p class="text-porange text-xs font-bold uppercase tracking-widest">Skills</p>
-          <ul class="mt-2 space-y-1">
-            <% @skills.each do |skill| %>
-              <li class="text-xs text-pdark"><%= skill %></li>
-            <% end %>
-          </ul>
-        </div>
-
-        <div class="mt-6" id="languages">
-          <p class="text-porange text-xs font-bold uppercase tracking-widest">Languages</p>
-          <ul class="mt-2 space-y-1">
-            <% @languages.each do |language| %>
-              <li class="text-xs text-pdark"><%= language %></li>
-            <% end %>
-          </ul>
-        </div>
-
-        <div class="mt-6" id="reference">
-          <p class="text-porange text-xs font-bold uppercase tracking-widest">Reference</p>
-          <p class="mt-2 text-xs text-pdark"><%= @form.ref_name %></p>
-          <p class="text-xs text-ldark"><%= @form.ref_email %> · <%= @form.ref_phone %></p>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<div class="bg-light py-12 flex justify-center print:p-0 print:bg-white mt-5">
+  <%= render "forms/templates/#{@form.template}", form: @form %>
 </div>
 
 <div class="no-print bg-pdark py-6 flex justify-center">
