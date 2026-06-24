@@ -1,0 +1,18 @@
+# Cloudflare Tunnel config for STATION1.
+# After `cloudflared tunnel create station1`, install this to:
+#   /etc/cloudflared/config.yml   (when running as a system service)
+#
+# Replace <TUNNEL_UUID> with the id printed by the create step, and point
+# credentials-file at the matching .json that the create step wrote
+# (under ~/.cloudflared/ for the user who ran it).
+
+tunnel: <TUNNEL_UUID>
+credentials-file: /home/deploy/.cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  - hostname: station1.me
+    service: http://localhost:8080
+  - hostname: www.station1.me
+    service: http://localhost:8080
+  # Required catch-all: anything else gets a 404 instead of reaching the app.
+  - service: http_status:404

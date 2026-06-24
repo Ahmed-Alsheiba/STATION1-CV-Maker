@@ -1,0 +1,19 @@
+[Unit]
+Description=STATION1 Puma (CV-Maker)
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/var/www/station1/current
+EnvironmentFile=/var/www/station1/shared/.env
+# rbenv shim — adjust the home path if your deploy user is not `deploy`
+ExecStart=/home/deploy/.rbenv/shims/bundle exec puma -C config/puma.rb
+Restart=always
+RestartSec=3
+SyslogIdentifier=station1
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
