@@ -9,8 +9,8 @@ Active Storage stays on local disk in a persistent dir.
 Browser ──https──> Cloudflare edge (TLS for station1.me)
                         │  (outbound tunnel, no inbound ports)
                    cloudflared (on the laptop)
-                        │  http://localhost:8080
-                   Nginx 127.0.0.1:8080 (static files) ──> Puma (unix socket) ──> Rails 7
+                        │  http://localhost:8090
+                   Nginx 127.0.0.1:8090 (static files) ──> Puma (unix socket) ──> Rails 7
                                                                   ↓
                                                       PostgreSQL (localhost)
                                                       shared/storage (uploads on disk)
@@ -21,7 +21,7 @@ Files in this directory:
 | File | Goes to |
 |------|---------|
 | `station1.service`     | `/etc/systemd/system/station1.service` |
-| `nginx-station1.conf`  | `/etc/nginx/sites-available/station1` (listens on `127.0.0.1:8080`) |
+| `nginx-station1.conf`  | `/etc/nginx/sites-available/station1` (listens on `127.0.0.1:8090`) |
 | `cloudflared-config.yml` | `/etc/cloudflared/config.yml` (after `cloudflared tunnel create`) |
 | `.env.example`         | copy to `/var/www/station1/shared/.env`, fill in, `chmod 600` |
 | `../bin/deploy.sh`     | runs in place from `/var/www/station1/current` for redeploys |
@@ -120,7 +120,7 @@ Before editing, substitute placeholders (`YOUR_DOMAIN`, `DEPLOY_USER`,
 
 - `sudo systemctl status station1` and `... status cloudflared` both active;
   `journalctl -u station1 -f` shows Puma booted.
-- Local origin works: `curl -I -H 'Host: station1.me' http://127.0.0.1:8080` → 200/301.
+- Local origin works: `curl -I -H 'Host: station1.me' http://127.0.0.1:8090` → 200/301.
 - Public site: `curl -I https://station1.me` → 200 with a valid Cloudflare cert.
 - Browse landing page + `/examples`; Tailwind renders (asset precompile worked).
 - Sign up / log in (Devise over HTTPS, secure cookie).

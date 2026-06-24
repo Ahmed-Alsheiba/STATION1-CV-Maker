@@ -11,8 +11,8 @@ credentials-file: /home/deploy/.cloudflared/<TUNNEL_UUID>.json
 
 ingress:
   - hostname: station1.me
-    service: http://localhost:8080
+    service: http://localhost:8090
   - hostname: www.station1.me
-    service: http://localhost:8080
+    service: http://localhost:8090
   # Required catch-all: anything else gets a 404 instead of reaching the app.
   - service: http_status:404
