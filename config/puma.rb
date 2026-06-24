@@ -14,11 +14,13 @@ threads min_threads_count, max_threads_count
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+# Skipped in production where PUMA_SOCKET is set, so Puma listens ONLY on the unix
+# socket and is never exposed on a TCP port.
 #
-port ENV.fetch("PORT") { 3000 }
+port ENV.fetch("PORT") { 3000 } unless ENV["PUMA_SOCKET"]
 
 # In production, bind to a unix socket that Nginx proxies to (keeps Puma off the
-# public network). Falls back to the TCP `port` above when PUMA_SOCKET is unset.
+# network entirely). When PUMA_SOCKET is unset (dev), the TCP `port` above is used.
 bind "unix://#{ENV['PUMA_SOCKET']}" if ENV["PUMA_SOCKET"]
 
 # Specifies the `environment` that Puma will run in.
