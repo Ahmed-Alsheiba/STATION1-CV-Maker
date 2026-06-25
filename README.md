@@ -108,7 +108,7 @@ User ──< Form ──< Experience
 
 ## Author
 
-**Ahmed Alshaiba** — [GitHub](https://github.com/Ahmed-Alshaiba)
+**Ahmed Alshaiba** — [GitHub](https://github.com/Ahmed-Alsheiba)
 
 <div align="center">
 
