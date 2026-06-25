@@ -37,6 +37,7 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
-# Local deployment handoff notes (not for the repo).
+# Local deployment handoff / session notes (not for the repo).
 /DEPLOYMENT_HANDOFF.md
+/deploy/SESSION_SUMMARY.md
 
