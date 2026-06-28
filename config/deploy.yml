@@ -1,0 +1,63 @@
+# Kamal 2 deploy config for STATION1 on the shared Raspberry Pi.
+# Placeholders in UPPER_CASE must be filled from the Pi / helpdesk before deploying.
+# STATION1 is additive: it reuses the helpdesk's kamal-proxy, Postgres container, and tunnel.
+
+service: station1
+image: ahmed-alsheiba/station1                 # GHCR repo path MUST be lowercase -> ghcr.io/ahmed-alsheiba/station1
+
+servers:
+  web:
+    - 192.168.8.223                                 # the same Pi the helpdesk runs on
+  # No `job:` role — this app has no background worker (no Sidekiq/Solid Queue/Resque).
+
+proxy:
+  ssl: false                                # Cloudflare terminates TLS; no inbound :443 for Let's Encrypt
+  forward_headers: true                     # pass Cloudflare's X-Forwarded-* through (real client IP) — matches helpdesk
+  hosts:
+    - station1.me
+    - www.station1.me                       # www -> apex redirect, if wanted, must be app-side (proxy can't)
+  app_port: 3000                            # matches Puma / EXPOSE in the Dockerfile
+  healthcheck:
+    path: /up                               # the route added in config/routes.rb
+
+registry:
+  server: ghcr.io
+  username: ahmed-alsheiba
+  password:
+    - KAMAL_REGISTRY_PASSWORD              # from .kamal/secrets (a GHCR PAT)
+
+ssh:
+  user: deploy                              # the Pi's Kamal SSH user (Kamal defaults to root) — matches the helpdesk
+
+builder:
+  arch: arm64                               # the Pi is arm64; Apple Silicon builds it natively
+
+env:
+  clear:
+    RAILS_ENV: production
+    RAILS_SERVE_STATIC_FILES: "true"        # no Nginx in the container
+    RAILS_LOG_TO_STDOUT: "true"             # so `kamal app logs` shows Rails logs
+    APP_HOST: station1.me                   # required by the Action Mailer config in production.rb
+    DB_HOST: mini_helpdesk-db               # the helpdesk's shared Postgres container (PG 17, on the kamal network)
+    DB_PORT: "5432"
+    DB_NAME: station1_production
+    DB_USER: station1
+  secret:
+    - RAILS_MASTER_KEY
+    # No DB_PASSWORD here — config/database.yml reads the DB password from credentials.yml.enc at
+    # runtime; RAILS_MASTER_KEY (injected above) is what decrypts it.
+
+volumes:
+  - "station1_storage:/rails/storage"            # named volume (Docker-managed, owned by the rails user,
+                                                 # persists across deploys) — matches the helpdesk pattern
+
+asset_path: /rails/public/assets                 # bridge precompiled assets across deploys (avoids 404s) — matches helpdesk
+
+aliases:                                         # convenience shortcuts — mirror the helpdesk
+  console: app exec --interactive --reuse "bin/rails console"
+  shell:   app exec --interactive --reuse "bash"
+  logs:    app logs -f
+  dbc:     app exec --interactive --reuse "bin/rails dbconsole"
+
+# NO `accessories:` block — STATION1 connects to the helpdesk's existing Postgres container
+# by name over the shared `kamal` Docker network. Verify: docker network inspect kamal

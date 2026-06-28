@@ -15,4 +15,14 @@ test:
 
 production:
   <<: *default
-  database: <%= ENV["DATABASE_URL"] %>
+  # Kamal/Pi uses explicit DB_* vars (Ruby's URI parser mangles some passwords).
+  # The native laptop deploy still sets DATABASE_URL — keep it working as a fallback.
+  <% if ENV["DATABASE_URL"].present? %>
+  url: <%= ENV["DATABASE_URL"] %>
+  <% else %>
+  host: <%= ENV["DB_HOST"] %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
+  database: <%= ENV["DB_NAME"] %>
+  username: <%= ENV["DB_USER"] %>
+  password: <%= Rails.application.credentials.dig(:db, :password) %>
+  <% end %>

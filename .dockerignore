@@ -1,0 +1,26 @@
+.git
+.gitignore
+.dockerignore
+
+# Secrets & keys — never bake these into the image
+.kamal/secrets*
+config/master.key
+.env*
+
+# Runtime / ephemeral (recreated in the image; uploads live on a host volume)
+/log/*
+/tmp/*
+/storage/*
+
+# Precompiled assets are regenerated during the image build
+/public/assets
+
+# Dev / test only
+/node_modules
+/test
+/.byebug_history
+
+# Local-only deploy notes (not needed in the image)
+/HANDOFF.md
+/DEPLOYMENT_HANDOFF.md
+/deploy

@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+# Run pending migrations before the web server starts (idempotent — a no-op when the DB
+# is already up to date, e.g. on the first deploy after restoring the laptop's dump).
+if [ "${1}" = "bundle" ] && [ "${2}" = "exec" ] && [ "${3}" = "puma" ]; then
+  bundle exec rails db:prepare
+fi
+
+exec "${@}"

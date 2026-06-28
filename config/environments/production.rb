@@ -46,8 +46,14 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # Nginx terminates TLS and forwards X-Forwarded-Proto so Rails knows the request was HTTPS.
+  # TLS is terminated upstream at the Cloudflare edge; kamal-proxy (ssl:false) forwards traffic.
   config.force_ssl = true
+
+  # Rails 7.0 has no `config.assume_ssl`. Backport ActionDispatch::AssumeSSL so Rails treats
+  # every request as HTTPS: prevents a force_ssl redirect loop AND stops kamal-proxy's internal
+  # /up health check (plain HTTP, no X-Forwarded-Proto) from being 301'd, which would fail deploys.
+  require Rails.root.join("lib", "middleware", "assume_ssl")
+  config.middleware.insert_before ActionDispatch::SSL, Middleware::AssumeSSL
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -66,7 +72,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # Required so Devise (:recoverable) can build absolute URLs in password-reset emails.
-  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST"), protocol: "https" }
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "station1.me"), protocol: "https" }
 
   # Deliver mail via SMTP using credentials from the environment (transactional
   # provider such as Resend/Postmark/SendGrid/Mailgun, or a local relay).

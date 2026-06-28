@@ -40,4 +40,8 @@
 # Local deployment handoff / session notes (not for the repo).
 /DEPLOYMENT_HANDOFF.md
 /deploy/SESSION_SUMMARY.md
+/HANDOFF.md
+# Kamal deploy secrets — never commit (sourced from ~/.station1 at deploy time).
+/.kamal/secrets*
+.env*
 
