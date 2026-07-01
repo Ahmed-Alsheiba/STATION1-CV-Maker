@@ -1,6 +1,6 @@
 # Kamal 2 deploy config for STATION1 on the shared Raspberry Pi.
 # Placeholders in UPPER_CASE must be filled from the Pi / helpdesk before deploying.
-# STATION1 is additive: it reuses the helpdesk's kamal-proxy, Postgres container, and tunnel.
+# STATION1 is additive: it reuses the shared kamal-proxy, the shared Postgres container (shared-postgres), and tunnel.
 
 service: station1
 image: ahmed-alsheiba/station1                 # GHCR repo path MUST be lowercase -> ghcr.io/ahmed-alsheiba/station1
@@ -38,7 +38,7 @@ env:
     RAILS_SERVE_STATIC_FILES: "true"        # no Nginx in the container
     RAILS_LOG_TO_STDOUT: "true"             # so `kamal app logs` shows Rails logs
     APP_HOST: station1.me                   # required by the Action Mailer config in production.rb
-    DB_HOST: mini_helpdesk-db               # the helpdesk's shared Postgres container (PG 17, on the kamal network)
+    DB_HOST: shared-postgres                # the shared Postgres container (PG 17, on the kamal network)
     DB_PORT: "5432"
     DB_NAME: station1_production
     DB_USER: station1
@@ -59,5 +59,5 @@ aliases:                                         # convenience shortcuts — mir
   logs:    app logs -f
   dbc:     app exec --interactive --reuse "bin/rails dbconsole"
 
-# NO `accessories:` block — STATION1 connects to the helpdesk's existing Postgres container
+# NO `accessories:` block — STATION1 connects to the shared Postgres container (shared-postgres)
 # by name over the shared `kamal` Docker network. Verify: docker network inspect kamal
